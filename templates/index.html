@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIX-IA - Entèlijans Atifisyèl pa Mr_Drinx</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>ALIX-IA - Chat ak Mr_Drinx</title>
     <style>
         * {
             margin: 0;
@@ -14,215 +13,154 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            background: #e5ddd5;
+            height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000000' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
 
-        .container {
+        .whatsapp-container {
             max-width: 900px;
+            height: 100vh;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header .subtitle {
-            font-size: 1.1em;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-
-        .creator {
-            font-size: 0.9em;
-            opacity: 0.7;
-            font-style: italic;
-        }
-
-        .features {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* HEADER - WhatsApp style */
+        .chat-header {
+            background: #075e54;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
             gap: 15px;
-            margin-top: 15px;
-            flex-wrap: wrap;
+            border-left: 1px solid #ddd;
         }
 
-        .feature-tag {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 12px;
-            border-radius: 15px;
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .chat-info h2 {
+            font-size: 1.1em;
+            margin-bottom: 3px;
+        }
+
+        .chat-info p {
             font-size: 0.8em;
+            opacity: 0.8;
         }
 
-        .chat-container {
-            height: 500px;
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75em;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #25d366;
+            border-radius: 50%;
+        }
+
+        /* CHAT MESSAGES AREA */
+        .chat-messages {
+            flex: 1;
             overflow-y: auto;
             padding: 20px;
-            background: #f8f9fa;
-        }
-
-        .message {
-            margin-bottom: 20px;
+            background: #e5ddd5;
             display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .user-message {
-            justify-content: flex-end;
+        /* MESSAGE BUBBLES */
+        .message {
+            display: flex;
+            max-width: 70%;
+            animation: fadeIn 0.3s ease-in;
         }
 
-        .bot-message {
-            justify-content: flex-start;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .received {
+            align-self: flex-start;
+        }
+
+        .sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
         }
 
         .message-bubble {
-            max-width: 70%;
-            padding: 15px 20px;
-            border-radius: 20px;
-            font-size: 1em;
+            padding: 8px 12px;
+            border-radius: 7.5px;
+            font-size: 0.95em;
             line-height: 1.4;
+            word-wrap: break-word;
         }
 
-        .user-message .message-bubble {
-            background: #007bff;
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-
-        .bot-message .message-bubble {
+        .received .message-bubble {
             background: white;
-            color: #333;
-            border: 1px solid #e0e0e0;
-            border-bottom-left-radius: 5px;
+            border-top-left-radius: 0;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
         }
 
-        .message-info {
+        .sent .message-bubble {
+            background: #dcf8c6;
+            border-top-right-radius: 0;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+        }
+
+        .message-time {
             font-size: 0.7em;
-            opacity: 0.6;
+            color: #667781;
             margin-top: 5px;
             text-align: right;
         }
 
-        .input-container {
-            padding: 20px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
+        .received .message-time {
+            text-align: left;
         }
 
-        .input-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        #message-input {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 1em;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        #message-input:focus {
-            border-color: #007bff;
-        }
-
-        #image-url {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 1em;
-            outline: none;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        #send-button {
-            padding: 15px 25px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background 0.3s;
-        }
-
-        #send-button:hover {
-            background: #0056b3;
-        }
-
-        #send-button:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-        }
-
-        #upload-button {
-            padding: 15px 25px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background 0.3s;
-        }
-
-        #upload-button:hover {
-            background: #218838;
-        }
-
-        #file-input {
-            display: none;
-        }
-
-        .image-preview {
-            max-width: 200px;
-            max-height: 150px;
-            border-radius: 10px;
-            margin-top: 10px;
-            display: none;
-        }
-
+        /* TYPING INDICATOR */
         .typing-indicator {
             display: none;
-            padding: 15px 20px;
+            align-self: flex-start;
             background: white;
-            border-radius: 20px;
-            border: 1px solid #e0e0e0;
-            margin-bottom: 20px;
+            padding: 10px 15px;
+            border-radius: 7.5px;
+            border-top-left-radius: 0;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
         }
 
         .typing-dots {
             display: flex;
-            gap: 5px;
+            gap: 3px;
         }
 
         .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: #999;
+            width: 6px;
+            height: 6px;
+            background: #667781;
             border-radius: 50%;
-            animation: typing 1.4s infinite;
+            animation: typingBounce 1.4s infinite;
         }
 
         .typing-dot:nth-child(2) {
@@ -233,81 +171,168 @@
             animation-delay: 0.4s;
         }
 
-        @keyframes typing {
+        @keyframes typingBounce {
             0%, 60%, 100% {
                 transform: translateY(0);
                 opacity: 0.4;
             }
             30% {
-                transform: translateY(-10px);
+                transform: translateY(-5px);
                 opacity: 1;
             }
         }
 
+        /* INPUT AREA */
+        .input-container {
+            background: #f0f0f0;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95em;
+            outline: none;
+            background: white;
+        }
+
+        .send-button {
+            background: #075e54;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .send-button:hover {
+            background: #128c7e;
+        }
+
+        .send-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .attach-button {
+            background: transparent;
+            border: none;
+            color: #54656f;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* IMAGE UPLOAD STYLES */
+        .image-upload-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .image-url-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            outline: none;
+            background: white;
+        }
+
+        .upload-button {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 10px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* WELCOME MESSAGE */
         .welcome-message {
             text-align: center;
-            color: #666;
-            font-style: italic;
+            color: #667781;
+            font-size: 0.9em;
             margin-bottom: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 7.5px;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
         }
 
-        .model-badge {
-            background: #ff6b6b;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.7em;
-            margin-left: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                margin: 10px;
-                border-radius: 10px;
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .whatsapp-container {
+                height: 100vh;
             }
             
-            .message-bubble {
+            .message {
                 max-width: 85%;
             }
             
-            .header h1 {
-                font-size: 2em;
+            .chat-header {
+                padding: 12px 15px;
             }
-            
-            .input-row {
-                flex-direction: column;
-            }
-            
-            .button-group {
-                width: 100%;
-            }
-            
-            #send-button, #upload-button {
-                flex: 1;
-            }
+        }
+
+        /* SCROLLBAR */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #cccccc;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>ALIX-IA</h1>
-            <div class="subtitle">Entèlijans Atifisyèl ki baze sou Google Gemini</div>
-            <div class="creator">Kreye pa Mr_Drinx</div>
-            <div class="features">
-                <span class="feature-tag">💬 Chat Tèks</span>
-                <span class="feature-tag">🖼️ Analiz Imaj</span>
-                <span class="feature-tag">🔍 Vizyon Entèlijans</span>
-                <span class="feature-tag">⚡ Gemini API</span>
+    <div class="whatsapp-container">
+        <!-- HEADER -->
+        <div class="chat-header">
+            <div class="avatar">AI</div>
+            <div class="chat-info">
+                <h2>ALIX-IA</h2>
+                <div class="status">
+                    <div class="online-dot"></div>
+                    <span>En ligne • Google Gemini</span>
+                </div>
             </div>
         </div>
-        
-        <div class="chat-container" id="chat-container">
+
+        <!-- CHAT MESSAGES -->
+        <div class="chat-messages" id="chat-messages">
             <div class="welcome-message">
-                👋 Bonjou! Mwen se ALIX-IA, yon entèlijans atifisyèl ki baze sou Google Gemini. Mwen ka ede w ak kesyon, eksplikasyon, epi analize imaj. Kreyatè mwen se Mr_Drinx. Kijan mwen ka asiste w jodi a?
+                👋 ALIX-IA aktif! Mwen se yon entèlijans atifisyèl ki baze sou Google Gemini. Kreyatè mwen se Mr_Drinx. Kijan mwen ka ede w jodi a?
             </div>
         </div>
-        
+
+        <!-- TYPING INDICATOR -->
         <div class="typing-indicator" id="typing-indicator">
             <div class="typing-dots">
                 <div class="typing-dot"></div>
@@ -315,62 +340,80 @@
                 <div class="typing-dot"></div>
             </div>
         </div>
-        
-        <div class="input-container">
-            <div class="input-row">
-                <input type="text" id="message-input" placeholder="Pose yon kesyon ou dekri sa w vle analize..." autocomplete="off">
-                <input type="text" id="image-url" placeholder="Ou byen kole yon URL imaj isit...">
-            </div>
-            <div class="input-row">
-                <div class="button-group">
-                    <button id="send-button">Voye Mesaj</button>
-                    <button id="upload-button">Chaje Imaj</button>
-                    <input type="file" id="file-input" accept="image/*">
-                </div>
-            </div>
-            <img id="image-preview" class="image-preview" alt="Preview imaj">
+
+        <!-- IMAGE UPLOAD -->
+        <div class="image-upload-container" id="image-upload-container" style="display: none;">
+            <input type="text" class="image-url-input" id="image-url-input" placeholder="Kole URL yon imaj...">
+            <button class="upload-button" id="upload-button">Chaje Imaj</button>
+            <input type="file" id="file-input" accept="image/*" style="display: none;">
         </div>
+
+        <!-- INPUT AREA -->
+        <div class="input-container">
+            <button class="attach-button" id="attach-button" title="Chaje imaj">
+                📎
+            </button>
+            <input type="text" class="message-input" id="message-input" placeholder="Tape yon mesaj..." autocomplete="off">
+            <button class="send-button" id="send-button">
+                ➤
+            </button>
+        </div>
+        <img id="image-preview" class="image-preview" alt="Preview imaj">
     </div>
 
     <script>
-        const chatContainer = document.getElementById('chat-container');
+        const chatMessages = document.getElementById('chat-messages');
         const messageInput = document.getElementById('message-input');
-        const imageUrlInput = document.getElementById('image-url');
         const sendButton = document.getElementById('send-button');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const attachButton = document.getElementById('attach-button');
+        const imageUploadContainer = document.getElementById('image-upload-container');
+        const imageUrlInput = document.getElementById('image-url-input');
         const uploadButton = document.getElementById('upload-button');
         const fileInput = document.getElementById('file-input');
         const imagePreview = document.getElementById('image-preview');
-        const typingIndicator = document.getElementById('typing-indicator');
 
         let currentImageData = '';
+        let isImageUploadVisible = false;
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.getHours().toString().padStart(2, '0') + ':' + 
+                   now.getMinutes().toString().padStart(2, '0');
+        }
 
         function addMessage(message, isUser = false, modelUsed = null) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.className = `message ${isUser ? 'sent' : 'received'}`;
             
             const bubble = document.createElement('div');
             bubble.className = 'message-bubble';
             bubble.innerHTML = message;
             
-            if (!isUser && modelUsed) {
-                const info = document.createElement('div');
-                info.className = 'message-info';
-                info.textContent = `Ak ${modelUsed}`;
-                bubble.appendChild(info);
-            }
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = getCurrentTime() + (modelUsed ? ` • ${modelUsed}` : '');
             
+            bubble.appendChild(timeDiv);
             messageDiv.appendChild(bubble);
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function showTypingIndicator() {
             typingIndicator.style.display = 'block';
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function hideTypingIndicator() {
             typingIndicator.style.display = 'none';
+        }
+
+        function toggleImageUpload() {
+            isImageUploadVisible = !isImageUploadVisible;
+            imageUploadContainer.style.display = isImageUploadVisible ? 'flex' : 'none';
         }
 
         function displayImagePreview(file) {
@@ -379,9 +422,15 @@
                 currentImageData = e.target.result;
                 imagePreview.src = currentImageData;
                 imagePreview.style.display = 'block';
+                
+                // Add image preview message
+                addMessage(`🖼️ Imaj chaje: ${file.name}`, true);
             };
             reader.readAsDataURL(file);
         }
+
+        // EVENT LISTENERS
+        attachButton.addEventListener('click', toggleImageUpload);
 
         uploadButton.addEventListener('click', () => {
             fileInput.click();
@@ -390,15 +439,18 @@
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 displayImagePreview(e.target.files[0]);
-                imageUrlInput.value = ''; // Vide URL input la
+                imageUrlInput.value = '';
+                toggleImageUpload(); // Hide upload container after selection
             }
         });
 
-        imageUrlInput.addEventListener('input', () => {
-            if (imageUrlInput.value) {
-                // Vide preview imaj lokal la lè gen URL
-                imagePreview.style.display = 'none';
-                currentImageData = '';
+        imageUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                if (imageUrlInput.value.trim()) {
+                    addMessage(`🖼️ URL imaj: ${imageUrlInput.value}`, true);
+                    imageUrlInput.value = '';
+                    toggleImageUpload();
+                }
             }
         });
 
@@ -407,24 +459,23 @@
             const imageUrl = imageUrlInput.value.trim();
             
             if (!message && !imageUrl && !currentImageData) {
-                alert('Tanpri tape yon mesaj, kole yon URL imaj, oswa chaje yon imaj');
                 return;
             }
 
-            // Vide input yo epi enfime bouton yo
+            // Clear inputs and disable button
             messageInput.value = '';
             imageUrlInput.value = '';
             sendButton.disabled = true;
-            uploadButton.disabled = true;
+            imagePreview.style.display = 'none';
 
-            // Ajoute mesaj itilizatè a
-            let userMessage = message || 'Analize imaj sa a';
-            if (imageUrl) userMessage += ` [Imaj: ${imageUrl}]`;
-            if (currentImageData) userMessage += ' [Imaj chaje]';
+            // Add user message
+            let userMessage = message || (imageUrl ? 'Gade imaj sa a' : 'Analize imaj sa a');
+            if (imageUrl) userMessage += ` 📎`;
+            if (currentImageData) userMessage += ` 🖼️`;
             
             addMessage(userMessage, true);
 
-            // Montre endikatè tapedo a
+            // Show typing indicator
             showTypingIndicator();
 
             try {
@@ -449,38 +500,38 @@
                 if (data.status === 'success') {
                     addMessage(data.response, false, data.model_used);
                 } else {
-                    addMessage('Eskize m, gen yon erè: ' + data.error);
+                    addMessage('❌ Erè: ' + (data.error || 'Nou pa kapab reponn kounye a'));
                 }
             } catch (error) {
                 hideTypingIndicator();
-                addMessage('Eskize m, gen yon pwoblèm koneksyon. Tanpri eseye ankò.');
+                addMessage('❌ Pwoblèm koneksyon. Tanpri eseye ankò.');
             } finally {
                 sendButton.disabled = false;
-                uploadButton.disabled = false;
-                imagePreview.style.display = 'none';
                 currentImageData = '';
                 messageInput.focus();
             }
         }
 
-        // Evènman pou bouton voye a
+        // Send message on button click
         sendButton.addEventListener('click', sendMessage);
 
-        // Evènman pou touche "Enter"
+        // Send message on Enter key
         messageInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
 
-        imageUrlInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
+        // Auto-focus on input
+        messageInput.focus();
+
+        // Hide image upload when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!imageUploadContainer.contains(e.target) && !attachButton.contains(e.target)) {
+                imageUploadContainer.style.display = 'none';
+                isImageUploadVisible = false;
             }
         });
-
-        // Oto-fokus sou input la lè paj la chaje
-        messageInput.focus();
     </script>
 </body>
 </html>
