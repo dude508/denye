@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALIX-IA - Entèlijans Atifisyèl pa Mr_Drinx</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .creator {
+            font-size: 0.9em;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .chat-container {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            line-height: 1.4;
+        }
+
+        .user-message .message-bubble {
+            background: #007bff;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message .message-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-info {
+            font-size: 0.7em;
+            opacity: 0.6;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #message-input:focus {
+            border-color: #007bff;
+        }
+
+        #image-url {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        #send-button {
+            padding: 15px 25px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        #send-button:hover {
+            background: #0056b3;
+        }
+
+        #send-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        #upload-button {
+            padding: 15px 25px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        #upload-button:hover {
+            background: #218838;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .model-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .message-bubble {
+                max-width: 85%;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .input-row {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                width: 100%;
+            }
+            
+            #send-button, #upload-button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ALIX-IA</h1>
+            <div class="subtitle">Entèlijans Atifisyèl ki baze sou Google Gemini</div>
+            <div class="creator">Kreye pa Mr_Drinx</div>
+            <div class="features">
+                <span class="feature-tag">💬 Chat Tèks</span>
+                <span class="feature-tag">🖼️ Analiz Imaj</span>
+                <span class="feature-tag">🔍 Vizyon Entèlijans</span>
+                <span class="feature-tag">⚡ Gemini API</span>
+            </div>
+        </div>
+        
+        <div class="chat-container" id="chat-container">
+            <div class="welcome-message">
+                👋 Bonjou! Mwen se ALIX-IA, yon entèlijans atifisyèl ki baze sou Google Gemini. Mwen ka ede w ak kesyon, eksplikasyon, epi analize imaj. Kreyatè mwen se Mr_Drinx. Kijan mwen ka asiste w jodi a?
+            </div>
+        </div>
+        
+        <div class="typing-indicator" id="typing-indicator">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <div class="input-row">
+                <input type="text" id="message-input" placeholder="Pose yon kesyon ou dekri sa w vle analize..." autocomplete="off">
+                <input type="text" id="image-url" placeholder="Ou byen kole yon URL imaj isit...">
+            </div>
+            <div class="input-row">
+                <div class="button-group">
+                    <button id="send-button">Voye Mesaj</button>
+                    <button id="upload-button">Chaje Imaj</button>
+                    <input type="file" id="file-input" accept="image/*">
+                </div>
+            </div>
+            <img id="image-preview" class="image-preview" alt="Preview imaj">
+        </div>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const messageInput = document.getElementById('message-input');
+        const imageUrlInput = document.getElementById('image-url');
+        const sendButton = document.getElementById('send-button');
+        const uploadButton = document.getElementById('upload-button');
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+        const typingIndicator = document.getElementById('typing-indicator');
+
+        let currentImageData = '';
+
+        function addMessage(message, isUser = false, modelUsed = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerHTML = message;
+            
+            if (!isUser && modelUsed) {
+                const info = document.createElement('div');
+                info.className = 'message-info';
+                info.textContent = `Ak ${modelUsed}`;
+                bubble.appendChild(info);
+            }
+            
+            messageDiv.appendChild(bubble);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            typingIndicator.style.display = 'block';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function displayImagePreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentImageData = e.target.result;
+                imagePreview.src = currentImageData;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        uploadButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                displayImagePreview(e.target.files[0]);
+                imageUrlInput.value = ''; // Vide URL input la
+            }
+        });
+
+        imageUrlInput.addEventListener('input', () => {
+            if (imageUrlInput.value) {
+                // Vide preview imaj lokal la lè gen URL
+                imagePreview.style.display = 'none';
+                currentImageData = '';
+            }
+        });
+
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            const imageUrl = imageUrlInput.value.trim();
+            
+            if (!message && !imageUrl && !currentImageData) {
+                alert('Tanpri tape yon mesaj, kole yon URL imaj, oswa chaje yon imaj');
+                return;
+            }
+
+            // Vide input yo epi enfime bouton yo
+            messageInput.value = '';
+            imageUrlInput.value = '';
+            sendButton.disabled = true;
+            uploadButton.disabled = true;
+
+            // Ajoute mesaj itilizatè a
+            let userMessage = message || 'Analize imaj sa a';
+            if (imageUrl) userMessage += ` [Imaj: ${imageUrl}]`;
+            if (currentImageData) userMessage += ' [Imaj chaje]';
+            
+            addMessage(userMessage, true);
+
+            // Montre endikatè tapedo a
+            showTypingIndicator();
+
+            try {
+                const requestData = {
+                    message: message || 'Eksplike imaj sa a pou mwen',
+                    image_url: imageUrl,
+                    image_data: currentImageData
+                };
+
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const data = await response.json();
+
+                hideTypingIndicator();
+
+                if (data.status === 'success') {
+                    addMessage(data.response, false, data.model_used);
+                } else {
+                    addMessage('Eskize m, gen yon erè: ' + data.error);
+                }
+            } catch (error) {
+                hideTypingIndicator();
+                addMessage('Eskize m, gen yon pwoblèm koneksyon. Tanpri eseye ankò.');
+            } finally {
+                sendButton.disabled = false;
+                uploadButton.disabled = false;
+                imagePreview.style.display = 'none';
+                currentImageData = '';
+                messageInput.focus();
+            }
+        }
+
+        // Evènman pou bouton voye a
+        sendButton.addEventListener('click', sendMessage);
+
+        // Evènman pou touche "Enter"
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        imageUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Oto-fokus sou input la lè paj la chaje
+        messageInput.focus();
+    </script>
+</body>
+</html>
