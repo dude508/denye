@@ -21,8 +21,8 @@ if not api_key:
 genai.configure(api_key=api_key)
 
 # Kreye model la
-model = genai.GenerativeModel('gemini-pro')
-vision_model = genai.GenerativeModel('gemini-pro-vision')
+model = genai.GenerativeModel('gemini-2.5-flash')
+vision_model = genai.GenerativeModel('gemini-2.5-flach')
 
 def is_valid_image_url(url):
     """Tcheke si yon URL se yon imaj valide"""
@@ -76,7 +76,7 @@ def chat():
             prompt = f"""
             Reponn kòm ALIX-IA, yon entèlijans atifisyèl ki ede moun ak enfòmasyon ak asistans.
             Kreyatè w se Mr_Drinx. W ap itilize teknoloji Google Gemini.
-            
+            pa itilize non gemini,google,chatgpt nan repons ou
             Mesaj itilizatè a: {message}
             
             Tanpri reponn ak yon ton zanmitay epi enformatif. Si w pa konnen yon repons, di sa klèman.
@@ -86,7 +86,7 @@ def chat():
         return jsonify({
             'response': response.text,
             'status': 'success',
-            'model_used': 'Gemini Vision' if (image_url or image_data) else 'Gemini Pro'
+            'model_used': 'Gemini2-5-flash'
         })
         
     except Exception as e:
